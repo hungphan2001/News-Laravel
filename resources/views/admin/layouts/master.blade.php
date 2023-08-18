@@ -135,13 +135,13 @@
             $('.delete-item').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
+                    title: '{{ __('Are you sure') }}?',
+                    text: "{{ __('You will not be able to revert this') }}!",
+                    icon: '{{ __('warning') }}',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '{{ __('Yes, delete it') }}!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let url = $(this).attr('href');
