@@ -68,6 +68,8 @@
   <script src="{{ asset('admin/assets/modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
   <script src="{{ asset('admin/assets/modules/summernote/summernote-bs4.js') }}"></script>
   <script src="{{ asset('admin/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
+  
+  @include('sweetalert::alert')
 
   <!-- Page Specific JS File -->
   <script src="{{ asset('admin/assets/js/page/index-0.js') }}"></script>
