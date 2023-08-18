@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Forgot Password &mdash; Admin</title>
+  <title>{{ __('Forgot Password') }} &mdash; Admin</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('admin/assets/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Forgot Password</h4></div>
+              <div class="card-header"><h4>{{ __('Forgot Password') }}</h4></div>
 
               <div class="card-body">
                 @if (session()->has('success'))
@@ -47,19 +47,19 @@
                 <form method="POST" action="{{ route('admin.forgot-password.send') }}" class="needs-validation" novalidate="">
                   @csrf
                     <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">{{ __('Email') }}</label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
                     @error('email')
                         <code>{{ $message }}</code>
                     @enderror
                     <div class="invalid-feedback">
-                      Please fill in your email
+                      {{ __('Please fill in your email') }}
                     </div>
                   </div>
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Send Link
+                      {{ __('Send Link') }}
                     </button>
                   </div>
                 </form>

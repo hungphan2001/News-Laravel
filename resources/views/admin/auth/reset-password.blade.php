@@ -37,45 +37,45 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Reset Password</h4></div>
+              <div class="card-header"><h4>{{__('Reset Password')}}</h4></div>
 
               <div class="card-body">
                 <form method="POST" action="{{ route('admin.reset-password.send') }}" class="needs-validation" novalidate="">
                   @csrf
                     <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">{{__('Email')}}</label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus value="{{ @request()->email }}">
                     <input id="email" type="hidden" class="form-control" name="token" tabindex="1" required autofocus value="{{ $token }}">
                     @error('email')
                         <code>{{ $message }}</code>
                     @enderror
                     <div class="invalid-feedback">
-                      Please fill in your email
+                     {{__(' Please fill in your email')}}
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">{{ __('Password') }}</label>
                     <input id="password" type="password" class="form-control" name="password" tabindex="1" required autofocus>
                     @error('password')
                         <code>{{ $message }}</code>
                     @enderror
                     <div class="invalid-feedback">
-                      Please fill in your confirm password
+                      {{ __('Please fill in your confirm password') }}
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="password">Confirm Password</label>
+                    <label for="password">{{ __('Confirm Password') }}</label>
                     <input id="password" type="password" class="form-control" name="password_confirmation" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your password
+                      {{ __('Please fill in your password') }}
                     </div>
                   </div>
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Send Link
+                      {{ __('Send Link') }}
                     </button>
                   </div>
                 </form>
