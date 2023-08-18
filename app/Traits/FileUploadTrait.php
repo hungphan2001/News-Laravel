@@ -4,25 +4,28 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 use File;
-trait FileUploadTrait{
-    public function handleFileUpload(Request $request,string $fieldName,?string $oldPath=null,string $dir ='uploads'):String
-    {
-        //Delete the existing image if have
-        if($oldPath && File::exists(public_path($oldPath))){
-            File::delete(public_path($oldPath));
-        }
 
+trait FileUploadTrait
+{
+    public function handleFileUpload(Request $request, string $fieldName, ?string $oldPath = null, string $dir = 'uploads'): ?String
+    {
         //Check request has file
         if(!$request->hasFile($fieldName)){
             return null;
         }
 
+        //Delete the existing image if have
+        if($oldPath && File::exists(public_path($oldPath))){
+            File::delete(public_path($oldPath));
+        }
+
         $file = $request->file($fieldName);
         $extension = $file->getClientOriginalExtension();
-        $updateFileName = \Str::random(30).'.'.$extension;
-        $file->move(public_path($dir),$updateFileName);
+        $updatedFileName = \Str::random(30).'.'.$extension;
 
-        $filePath = $dir.'/'.$updateFileName;//uploads/filename.jpg
+        $file->move(public_path($dir), $updatedFileName);
+
+        $filePath = $dir.'/'.$updatedFileName;
 
         return $filePath;
     }

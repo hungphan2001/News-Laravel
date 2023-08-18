@@ -29,11 +29,12 @@
               </div>
               <div class="card-body">
                         <div class="col-12">
-                            <div id="image-preview" class="image-preview md-3">
+                            <div id="image-preview" class="image-preview mb-3" >
                                 <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
                                 <input type="file" name="image" id="image-upload">
-                                <input type="hidden" name="old-image" value="{{ $user->image }}">
-                              </div>
+                                <input type="hidden" name="old_image" value="{{ $user->image }}">
+
+                            </div>
                               @error('image')
                               <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -99,3 +100,15 @@
     </div>
   </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.image-preview').css({
+                "background-image": "url({{ asset($user->image) }})",
+                "background-size": "cover",
+                "background-position": "center center"
+            });
+        })
+    </script>
+@endpush
