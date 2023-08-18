@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminProfileUpdateRequest;
+use App\Http\Requests\AdminUpdatePasswordRequest;
 use App\Models\Admin;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
@@ -69,6 +72,22 @@ class ProfileController extends Controller
         $admin->email = $request->email;
         $admin->save();
 
+        return redirect()->back();
+    }
+
+    /**
+     * Update the specified resource for password.
+     */
+
+    public function passwordUpdate(AdminUpdatePasswordRequest $request,string $id){
+
+        // if(!Hash::check($request->current_password,Admin::guard('admin')->user()->password)){
+        //     throw ValidationException::withMessages(['current_password'=>__('old password doesn\'t match')]);
+        // }
+
+        $admin = Admin::findOrFail($id);
+        $admin ->password = bcrypt($request->password);
+        $admin->save();
         return redirect()->back();
     }
 

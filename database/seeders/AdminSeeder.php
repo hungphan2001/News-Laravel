@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
         $admin->image ='/test';
         $admin->name='Super Test';
         $admin->email='admin@gmail.com';
-        $admin->password="$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi";
+        $admin->password="$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi";//password
         $admin->status =1;
         $admin->save();
     }
