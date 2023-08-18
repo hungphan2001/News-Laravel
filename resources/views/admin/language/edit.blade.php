@@ -11,14 +11,18 @@
         <h4>Create Languages</h4>
     </div>
     <div class="card-body">
-     <form action="{{ route('admin.language.store') }}" method="POST">
+     <form action="{{ route('admin.language.update',$language->id) }}" method="post">
         @csrf
-
+        @method('put')
         <div class="form-group">
             <label for="">Language</label>
             <select name="lang" id="language-select" class="form-control select2" >
                 <option value="">--Select--</option>
                 @foreach (config('language') as $key=>$lang )
+                @if ($language->lang===$key)
+                selected
+
+                @endif
                 <option value="{{ $key }}">{{ $lang['name'] }}</option>
                 @endforeach
             </select>
@@ -29,14 +33,15 @@
         </div>
         <div class="form-group">
             <label for="">Name</label>
-            <input readonly name='name' type="text" class='form-control' id='name'>
+            <input readonly name='name' value={{ $language->name }}
+            type="text" class='form-control' id='name'>
             @error('name')
             <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
             <label for="">Slug</label>
-            <input readonly name='slug' type="text" class='form-control' id='slug'>
+            <input readonly name='slug' type="text" class='form-control' id='slug' value={{ $language->slug }}>
             @error('slug')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -44,8 +49,8 @@
         <div class="form-group">
             <label for="">Is is default?</label>
             <select name="default" id="" class="form-control select2">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
+                <option {{ $language->default===0 ? 'selected': '' }} value="0">No</option>
+                <option {{ $language->default===1 ? 'selected': '' }} value="1">Yes</option>
             </select>
             @error('default')
             <p class="text-danger">{{ $message }}</p>
@@ -53,9 +58,9 @@
         </div>
         <div class="form-group">
             <label for="">Status</label>
-            <select name="status" id="" class="form-control select2" >
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
+            <select name="status" id="" class="form-control select2" value={{ $language->status }}>
+                <option {{ $language->default===1 ? 'selected': '' }} value="1">Active</option>
+                <option {{ $language->default===0 ? 'selected': '' }} value="0">Inactive</option>
             </select>
             @error('status')
             <p class="text-danger">{{ $message }}</p>
