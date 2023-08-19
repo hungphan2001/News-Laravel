@@ -14,7 +14,7 @@
                 <div class="d-sm-none d-lg-inline-block">{{ __('Hi') }}, {{ Auth::guard('admin')->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a href="features-profile.html" class="dropdown-item has-icon">
+                <a href="{{ route('admin.profile.index') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> {{ __('Profile') }}
                 </a>
                 <a href="features-settings.html" class="dropdown-item has-icon">

@@ -8,18 +8,20 @@
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Create News') }}</h4>
+                <h4>{{ __('Edit News') }}</h4>
 
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.news.update',$news->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('put')
                     <div class="form-group">
                         <label for="">{{ __('Language') }}</label>
                         <select name="language" id="language-select" class="form-control select2">
                             <option value="">--{{ __('Select') }}--</option>
                             @foreach ($languages as $lang)
-                                <option value="{{ $lang->lang }}">{{ $lang->name }}</option>
+                                <option {{ $lang->lang === $news->language ? 'selected' : '' }} value="{{ $lang->lang }}">
+                                    {{ $lang->name }}</option>
                             @endforeach
                         </select>
                         @error('language')
@@ -27,11 +29,15 @@
                         @enderror
                     </div>
 
+
                     <div class="form-group">
                         <label for="">{{ __('Category') }}</label>
                         <select name="category" id="category" class="form-control select2">
                             <option value="">--{{ __('Select') }}---</option>
-
+                            @foreach ($categories as $category )
+                            <option {{ $category->id === $news->category_id ? 'selected' : '' }}
+                                value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
                         </select>
                         @error('category')
                             <p class="text-danger">{{ $message }}</p>
@@ -51,8 +57,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{ __('Ttile') }}</label>
-                        <input name="title" type="text" class="form-control" id="name">
+                        <label for="">{{ __('Title') }}</label>
+                        <input name="title" value="{{ $news->title }}" type="text" class="form-control"
+                            id="name">
                         @error('title')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -60,7 +67,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Content') }}</label>
-                        <textarea name="content" class="summernote-simple"></textarea>
+                        <textarea name="content" class="summernote-simple">{{ $news->content }}</textarea>
                         @error('content')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -68,7 +75,7 @@
 
                     <div class="form-group">
                         <label class="">{{ __('Tags') }}</label>
-                        <input name="tags" type="text" class="form-control inputtags">
+                        <input name="tags" type="text" value="{{ formatTags($news->tags()->pluck('name')->toArray()) }}" class="form-control inputtags">
                         @error('tags')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -76,7 +83,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Meta Title') }}</label>
-                        <input name="meta_title" type="text" class="form-control" id="name">
+                        <input name="meta_title" value="{{ $news->meta_title }}" type="text" class="form-control" id="name">
                         @error('meta_title')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -84,7 +91,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Meta Description') }}</label>
-                        <textarea name="meta_description" class="form-control"></textarea>
+                        <textarea name="meta_description"  class="form-control">{{ $news->meta_description }} </textarea>
                         @error('meta_description')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -107,7 +114,7 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Is Breaking News') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="is_breaking_news"
+                                    <input {{ $news->is_breaking_news == 1 ?'checked' : '' }} value="1" type="checkbox" name="is_breaking_news"
                                         class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
@@ -117,7 +124,7 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Show At Slider') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="show_at_slider" class="custom-switch-input">
+                                    <input {{ $news->show_at_slider == 1 ? 'checked': '' }} value="1" type="checkbox" name="show_at_slider" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
                             </div>
@@ -128,7 +135,7 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Show At Popular') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="show_at_popular"
+                                    <input {{ $news->show_at_popular == 1 ? 'checked': ''}} value="1" type="checkbox" name="show_at_popular"
                                         class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
@@ -147,7 +154,15 @@
 @endsection
 
 @push('scripts')
+
     <script>
+        $(document).ready(function(){
+            $('.image-preview').css({
+                "background-image": "url({{ asset($news->image) }})",
+                "background-size": "cover",
+                "background-position": "center center"
+            });
+        })
         $(document).ready(function() {
             $('#language-select').on('change', function() {
                 let lang = $(this).val();
