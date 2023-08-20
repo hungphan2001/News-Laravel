@@ -1,3 +1,6 @@
+@php
+    $languages = \App\Models\Language::where('status',1)->get();
+@endphp
 <header class="bg-light">
     <!-- Navbar  Top-->
     <div class="topbar d-none d-sm-block">
@@ -25,10 +28,10 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="list-unstyled topbar-right d-flex align-items-center justify-content-end">
                         <div class="topbar_language">
-                            <select>
-                                <option>English</option>
-                                <option>Chines</option>
-                                <option>Korean</option>
+                            <select id="site-language">
+                                @foreach ($languages as $language)
+                                    <option value="{{ $language->lang }}"{{ getLanguage()=== $language->lang ? 'selected' : '' }}>{{ $language->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
