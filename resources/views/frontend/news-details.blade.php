@@ -126,31 +126,13 @@
                             <i class="fa fa-tags">
                             </i>
                         </li>
+                        @foreach ($news->tags as $tag )
                         <li class="list-inline-item">
                             <a href="#">
-                                #property
+                                #{{ $tag->name }}
                             </a>
                         </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                #sea
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                #programming
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                #sea
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                #property
-                            </a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- end tags-->
