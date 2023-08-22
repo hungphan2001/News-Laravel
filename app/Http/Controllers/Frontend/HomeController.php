@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
     public function index(){
         $breakingNews = News::where([
             'is_breaking_news'=>1
@@ -24,7 +26,9 @@ class HomeController extends Controller
          ->activeEntries()->withLocalize()->orderBy('id','DESC')->take(4)->get();
 
         $this->countView($news);
-        return view('frontend.news-details',compact('news','recentNews'));
+
+        $mostCommonTags = $this->mostCommonTags();
+        return view('frontend.news-details',compact('news','recentNews','mostCommonTags'));
     }
 
     public function countView($news)
@@ -44,5 +48,15 @@ class HomeController extends Controller
             $news->increment('views');
 
         }
+    }
+
+    public function mostCommonTags()
+    {
+        return Tag::select('name', \DB::raw('COUNT(*) as count'))
+            ->where('language', getLanguage())
+            ->groupBy('name')
+            ->orderByDesc('count')
+            ->take(15)
+            ->get();
     }
 }
