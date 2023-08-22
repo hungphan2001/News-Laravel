@@ -75,7 +75,9 @@
 
                     <div class="form-group">
                         <label class="">{{ __('Tags') }}</label>
-                        <input name="tags" type="text" value="{{ formatTags($news->tags()->pluck('name')->toArray()) }}" class="form-control inputtags">
+                        <input name="tags" type="text"
+                            value="{{ formatTags($news->tags()->pluck('name')->toArray()) }}"
+                            class="form-control inputtags">
                         @error('tags')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -102,7 +104,8 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Status') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                                    <input {{ $news->status === 1 ? 'checked' : '' }} value="1" type="checkbox"
+                                        name="status" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
                             </div>
@@ -146,7 +149,7 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Edit') }}</button>
                 </form>
             </div>
         </div>
