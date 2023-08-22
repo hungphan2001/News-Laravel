@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('show_at_popular')->default(0);
             $table->boolean('is_approved')->default(0);
             $table->boolean('status')->default(0);
+            $table->boolean('views')->default(0);
             $table->timestamps();
         });
     }

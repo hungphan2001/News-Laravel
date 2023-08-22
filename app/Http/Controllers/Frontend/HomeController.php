@@ -14,4 +14,32 @@ class HomeController extends Controller
         ])->activeEntries()->withLocalize()->orderBy('id','DESC')->take(10)->get();
         return view('frontend.home',compact('breakingNews'));
     }
+
+    public function showNews(string $slug){
+        $news = News::with(['author'])->where('slug',$slug)
+        ->activeEntries()->withLocalize()
+        ->first();
+
+        $this->countView($news);
+        return view('frontend.news-details',compact('news'));
+    }
+
+    public function countView($news)
+    {
+        if(session()->has('viewed_posts')){
+            $postIds = session('viewed_posts');
+
+            if(!in_array($news->id, $postIds)){
+                $postIds[] = $news->id;
+                $news->increment('views');
+            }
+            session(['viewed_posts' => $postIds]);
+
+        }else {
+            session(['viewed_posts' => [$news->id]]);
+
+            $news->increment('views');
+
+        }
+    }
 }
