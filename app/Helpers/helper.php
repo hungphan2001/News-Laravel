@@ -29,3 +29,9 @@ function setLanguage($code):void
 {
     session(['language'=>$code]);
 }
+
+//Truncate text
+function truncate(string $text,int $limit =100): string
+{
+    return \Str::limit($text,$limit,'...');
+}

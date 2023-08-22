@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Tranding news  carousel-->
-    @include('frontend.home-components.tranding-news')
+    @include('frontend.home-components.breaking-news')
     <!-- End Tranding news carousel -->
 
     <!-- Hero news -->
