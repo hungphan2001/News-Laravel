@@ -20,8 +20,11 @@ class HomeController extends Controller
         ->activeEntries()->withLocalize()
         ->first();
 
+        $recentNews = News::with(['category','author'])->where('slug','!=',$news->slug)
+         ->activeEntries()->withLocalize()->orderBy('id','DESC')->take(4)->get();
+
         $this->countView($news);
-        return view('frontend.news-details',compact('news'));
+        return view('frontend.news-details',compact('news','recentNews'));
     }
 
     public function countView($news)
