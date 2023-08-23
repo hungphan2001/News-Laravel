@@ -40,3 +40,4 @@ Route::get('news-details/{slug}',[HomeController::class,'showNews'])->name('news
 
 Route::post('news-comment',[HomeController::class,'handleComment'])->name('news-comment');
 Route::post('news-comment-reply',[HomeController::class,'handleReply'])->name('news-comment-reply');
+Route::delete('news-comment-destory',[HomeController::class,'commentDestory'])->name('news-comment-destory');
