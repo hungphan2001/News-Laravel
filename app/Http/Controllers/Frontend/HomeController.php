@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
 
     public function index(){
         $breakingNews = News::where([
@@ -31,7 +33,48 @@ class HomeController extends Controller
             ->activeEntries()->withLocalize()
             ->orderBy('updated_at', 'DESC')->take(4)->get();
 
-        return view('frontend.home',compact('breakingNews','heroSlider','recentNews','popularNews'));
+            $HomeSectionSetting = HomeSectionSetting::where('language', getLanguage())->first();
+
+            if($HomeSectionSetting){
+                $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
+                    ->activeEntries()->withLocalize()
+                    ->orderBy('id', 'DESC')
+                    ->take(8)
+                    ->get();
+
+            $categorySectionTwo = News::where('category_id', $HomeSectionSetting->category_section_two)
+                ->activeEntries()->withLocalize()
+                ->orderBy('id', 'DESC')
+                ->take(8)
+                ->get();
+
+            $categorySectionThree = News::where('category_id', $HomeSectionSetting->category_section_three)
+                ->activeEntries()->withLocalize()
+                ->orderBy('id', 'DESC')
+                ->take(6)
+                ->get();
+
+            $categorySectionFour = News::where('category_id', $HomeSectionSetting->category_section_four)
+                ->activeEntries()->withLocalize()
+                ->orderBy('id', 'DESC')
+                ->take(4)
+                ->get();
+            }else {
+                $categorySectionOne = collect();
+                $categorySectionTwo = collect();
+                $categorySectionThree = collect();
+                $categorySectionFour = collect();
+            }
+
+        return view('frontend.home',compact(
+        'breakingNews',
+        'heroSlider',
+        'recentNews',
+        'popularNews',
+        'categorySectionOne',
+        'categorySectionTwo',
+        'categorySectionThree',
+        'categorySectionFour'));
     }
 
     public function showNews(string $slug){
@@ -56,10 +99,17 @@ class HomeController extends Controller
         ->activeEntries()->withLocalize()
         ->take(5)
         ->get();
+
         $this->countView($news);
 
         $mostCommonTags = $this->mostCommonTags();
-        return view('frontend.news-details',compact('news','recentNews','mostCommonTags','nextPost','previousPost','relatedPosts'));
+        return view('frontend.news-details',compact(
+            'news',
+            'recentNews',
+            'mostCommonTags',
+            'nextPost',
+            'previousPost',
+            'relatedPosts'));
     }
 
     public function countView($news)

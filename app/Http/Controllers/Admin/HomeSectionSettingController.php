@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 class HomeSectionSettingController extends Controller
 {
+
+
     public function index(){
         $languages = Language::all();
         return view('admin.home-section-setting.index',compact('languages'));
