@@ -19,14 +19,11 @@
                 <!-- Breadcrumb -->
                 <ul class="breadcrumbs bg-light mb-4">
                     <li class="breadcrumbs__item">
-                        <a href="index.html" class="breadcrumbs__url">
+                        <a href="{{ route('home') }}" class="breadcrumbs__url">
                             <i class="fa fa-home"></i> {{ __('Home') }}</a>
                     </li>
                     <li class="breadcrumbs__item">
                         <a href="javascript:;" class="breadcrumbs__url">{{ __('News') }}</a>
-                    </li>
-                    <li class="breadcrumbs__item breadcrumbs__item--current">
-                        {{ __('World') }}
                     </li>
                 </ul>
                 <!-- end breadcrumb -->
@@ -157,9 +154,7 @@
                         <div class="wrap__profile-author-detail">
                             <div class="wrap__profile-author-detail-name">{{ __('author') }}</div>
                             <h4>{{ $news->author->name }}</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis laboriosam ad
-                                beatae itaque ea non
-                                placeat officia ipsum praesentium! Ullam?</p>
+                            <p>{{ $news->title }}</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <a href="#" class="btn btn-social btn-social-o facebook ">
@@ -195,7 +190,7 @@
                 <!-- Comment  -->
                 @auth
                 <div id="comments" class="comments-area">
-                    <h3 class="comments-title">2 Comments:</h3>
+                    <h3 class="comments-title">{{ $news->comments()->count() }} {{ __('Comments') }}:</h3>
 
                     <ol class="comment-list">
                         @foreach ($news->comments()->whereNull('parent_id')->get() as $comment )
@@ -274,7 +269,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Write Your Comment</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Write Your Comment') }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -285,7 +280,7 @@
                                         <textarea name="reply" cols="30" rows="7" placeholder="Type. . ."></textarea>
                                         <input type="hidden" name="news_id" value="{{ $news->id }}">
                                     <input type="hidden" name="parent_id" value="{{ $comment->id }}">
-                                        <button type="submit">submit</button>
+                                        <button type="submit">{{ __('submit') }}</button>
                                     </form>
                                 </div>
                             </div>
@@ -296,17 +291,17 @@
                     </ol>
 
                     <div class="comment-respond">
-                        <h3 class="comment-reply-title">Leave a Reply</h3>
+                        <h3 class="comment-reply-title">{{ __('Leave a Reply') }}</h3>
 
                         <form action={{ route('news-comment') }} method='POST' class="comment-form">
                             @csrf
                             <p class="comment-notes">
-                                <span id="email-notes">Your email address will not be published.</span>
-                                Required fields are marked
+                                <span id="email-notes">{{ __('Your email address will not be published') }}.</span>
+                                {{ __('Required fields are marked') }}
                                 <span class="required">*</span>
                             </p>
                             <p class="comment-form-comment">
-                                <label for="comment">Comment</label>
+                                <label for="comment">{{ __('Comment') }}</label>
                                 <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525"
                                     required="required"></textarea>
                                     <input type="hidden" name="news_id" value="{{ $news->id }}">
@@ -325,7 +320,7 @@
                 @else
                 <div class="card my-5">
                     <div class="card-body">
-                        <h5 class="p-0">Please <a href="{{ route('login') }}">Login</a> To comment in the post!</h5>
+                        <h5 class="p-0">{{ __('Please') }} <a href="{{ route('login') }}">{{ __('Login') }}</a> {{ __('to comment in the post') }}!</h5>
                     </div>
                 </div>
                 @endauth
