@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -24,6 +25,11 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function
 
     // Category routes
     Route::resource('category',CategoryController::class);
+
+    //Home Section Setting Routes
+    Route::get('home-section-setting', [HomeSectionSettingController::class, 'index'])->name('home-section-setting.index');
+    Route::put('home-section-setting', [HomeSectionSettingController::class, 'update'])->name('home-section-setting.update');
+
 
     // News routes
     Route::get('fetch-news-category', [NewsController::class, 'fetchCategory'])->name('fetch-news-category');
