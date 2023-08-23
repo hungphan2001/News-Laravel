@@ -33,4 +33,8 @@ class News extends Model
     public function author(){
         return $this->belongsTo(Admin::class);
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }
