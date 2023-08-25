@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
+use App\Models\SocialCount;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,6 +72,8 @@ class HomeController extends Controller
         ->take(3)
         ->get();
 
+        $socialCounts = SocialCount::where(['status'=>1,'language'=>getLanguage()])->get();
+
         return view('frontend.home',compact(
         'breakingNews',
         'heroSlider',
@@ -80,7 +83,8 @@ class HomeController extends Controller
         'categorySectionTwo',
         'categorySectionThree',
         'categorySectionFour',
-        'mostViewedPosts'));
+        'mostViewedPosts',
+        'socialCounts'));
     }
 
     public function showNews(string $slug){
