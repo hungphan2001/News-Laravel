@@ -98,7 +98,7 @@
                     <div class="top-search navigation-shadow">
                         <div class="container">
                             <div class="input-group ">
-                                <form action="#">
+                                <form action="{{ route('news') }}" method="GET">
 
                                     <div class="row no-gutters mt-3">
                                         <div class="col">
@@ -107,10 +107,7 @@
                                                 id="example-search-input4">
                                         </div>
                                         <div class="col-auto">
-                                            <a class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"
-                                                href="/search-result.html">
-                                                <i class="fa fa-search"></i>
-                                            </a>
+                                            <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
 
