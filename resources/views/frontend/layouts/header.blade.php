@@ -80,7 +80,7 @@
                                 <li><a class="dropdown-item" href="404.html"> 404 Error </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html"> contact </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> contact </a></li>
                     </ul>
 
 
