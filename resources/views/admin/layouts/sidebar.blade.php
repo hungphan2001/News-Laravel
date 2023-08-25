@@ -31,6 +31,15 @@
 
             <li><a class="nav-link" href="{{ route('admin.social-count.index') }}"><i class="far fa-square"></i> <span>{{__('Social Count')}}</span></a></li>
 
+            <li class="dropdown {{ setSidebarActive(['admin.about.*']) }}">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>
+                    <span>{{ __('Pages') }}</span></a>
+                <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.about.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.about.index') }}">{{ __('About Page') }}</a></li>
+                </ul>
+            </li>
+
             <li><a class="nav-link" href="{{ route('admin.home-section-setting.index') }}"><i class="far fa-square"></i> <span>{{__('Home Section Settings')}}</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.ad.index') }}"><i class="far fa-square"></i> <span>{{__('Advertisement')}}</span></a></li>
 
