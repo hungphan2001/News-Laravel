@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
@@ -113,6 +114,8 @@ class HomeController extends Controller
         ->take(5)
         ->get();
 
+        $socialCounts = SocialCount::where(['status'=>1,'language'=>getLanguage()])->get();
+
         $this->countView($news);
 
         $mostCommonTags = $this->mostCommonTags();
@@ -122,10 +125,13 @@ class HomeController extends Controller
             'mostCommonTags',
             'nextPost',
             'previousPost',
-            'relatedPosts'));
+            'relatedPosts',
+            'socialCounts'));
     }
 
-    public function news(Request $request){
+    public function news(Request $request)
+    {
+
         $news = News::query();
 
         $news->when($request->has('tag'), function($query) use ($request){
@@ -151,11 +157,14 @@ class HomeController extends Controller
 
         $news = $news->activeEntries()->withLocalize()->paginate(4);
 
+
         $recentNews = News::with(['category', 'author'])
             ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
-
         $mostCommonTags = $this->mostCommonTags();
-        return view('frontend.news',compact('news','recentNews','mostCommonTags'));
+
+        $categories = Category::where(['status' => 1, 'language' => getLanguage()])->get();
+
+        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
     }
 
     public function countView($news)

@@ -9,15 +9,13 @@
                 <!-- Breadcrumb -->
                 <ul class="breadcrumbs bg-light mb-4">
                     <li class="breadcrumbs__item">
-                        <a href="index.html" class="breadcrumbs__url">
-                            <i class="fa fa-home"></i> Home</a>
+                        <a href="{{ url('/') }}" class="breadcrumbs__url">
+                            <i class="fa fa-home"></i> {{ __('fHome') }}</a>
                     </li>
                     <li class="breadcrumbs__item">
-                        <a href="index.html" class="breadcrumbs__url">News</a>
+                        <a href="javascirt:;" class="breadcrumbs__url">{{ __('News') }}</a>
                     </li>
-                    <li class="breadcrumbs__item breadcrumbs__item--current">
-                        World
-                    </li>
+
                 </ul>
             </div>
 
@@ -31,36 +29,37 @@
                     <form action="{{ route('news') }}" method="GET">
                         <div class="row">
                             <div class="col-lg-5">
-                                <input type="text" placeholder="Type here" value="{{ request()->search}}" name="search">
+                                <input type="text" placeholder="Type here" value="{{ request()->search }}" name="search">
                             </div>
                             <div class="col-lg-4">
-                                <select>
-                                    <option value="#">Select Category</option>
-                                    <option value="#">Category 1</option>
-                                    <option value="#">Category 2</option>
-                                    <option value="#">Category 3</option>
-                                    <option value="#">Category 4</option>
-                                    <option value="#">Category 5</option>
-                                    <option value="#">Category 6</option>
+                                <select name="category">
+                                    <option value="">{{ __('All') }}</option>
+                                    @foreach ($categories as $category)
+                                    <option {{ $category->slug === request()->category ? 'selected' : '' }} value="{{ $category->slug }}">{{ $category->name }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <button type="submit">search</button>
+                                <button type="submit">{{ __('search') }}</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <aside class="wrapper__list__article ">
-                    <h4 class="border_section">Category title</h4>
+                    @if (request()->has('category'))
+
+                    <h4 class="border_section">{{ __('Category') }}: {{ request()->category }}</h4>
+                    @endif
 
                     <div class="row">
-                        @foreach ($news as $post )
+                        @foreach ($news as $post)
                         <div class="col-lg-6">
                             <!-- Post Article -->
                             <div class="article__entry">
                                 <div class="article__image">
-                                    <a href="{{ route('news-details',$post->slug) }}">
+                                    <a href="{{ route('news-details', $post->slug) }}">
                                         <img src="{{ asset($post->image) }}" alt="" class="img-fluid">
                                     </a>
                                 </div>
@@ -87,18 +86,17 @@
                                         </a>
                                     </h5>
                                     <p>
-                                        {!! truncate($post->content,100) !!}
+                                        {!! truncate($post->content, 100) !!}
                                     </p>
                                     <a href="{{ route('news-details', $post->slug) }}" class="btn btn-outline-primary mb-4 text-capitalize"> {{ __('read more') }}</a>
                                 </div>
                             </div>
                         </div>
                         @endforeach
-                        @if (count($news)===0)
-                        <div class="text-center w-100">
-                            <h4>{{ __('No News Found') }}</h4>
-                        </div>
-
+                        @if (count($news) === 0)
+                            <div class="text-center w-100" >
+                                <h4 >{{ __('.No News Found') }} :(</h4>
+                            </div>
                         @endif
                     </div>
 
@@ -219,19 +217,21 @@
                     </aside>
 
                     <aside class="wrapper__list__article">
-                        <h4 class="border_section">newsletter</h4>
+                        <h4 class="border_section">{{ __('newsletter') }}</h4>
                         <!-- Form Subscribe -->
                         <div class="widget__form-subscribe bg__card-shadow">
                             <h6>
-                                The most important world news and events of the day.
+                                {{ __('The most important world news and events of the day') }}.
                             </h6>
-                            <p><small>Get magzrenvi daily newsletter on your inbox.</small></p>
-                            <div class="input-group ">
-                                <input type="text" class="form-control" placeholder="Your email address">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">sign up</button>
+                            <p><small>{{ __('Get magzrenvi daily newsletter on your inbox') }}.</small></p>
+                            <form action="" class="newsletter-form">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control" name="email" placeholder="Your email address">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary newsletter-button" type="submit">{{ __('sign up') }}</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </aside>
 
