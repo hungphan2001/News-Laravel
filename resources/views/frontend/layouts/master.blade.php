@@ -38,7 +38,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -71,11 +70,51 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            window.location.reload();
+                            window.location.href = "{{ url('/') }}";
                         }
                     },
                     error: function(data) {
                         console.error(data);
+                    }
+                })
+            })
+
+            /** Subscribe Newsletter**/
+            $('.newsletter-form').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('subscribe-newsletter') }}",
+                    data: $(this).serialize(),
+                    beforeSend: function() {
+                        $('.newsletter-button').text('loading...');
+                        $('.newsletter-button').attr('disabled', true);
+                    },
+                    success: function(data) {
+                        if (data.status === 'success') {
+                            Toast.fire({
+                                icon: 'success',
+                                title: data.message
+                            })
+                            $('.newsletter-form')[0].reset();
+                            $('.newsletter-button').text('sign up');
+
+                            $('.newsletter-button').attr('disabled', false);
+                        }
+                    },
+                    error: function(data) {
+                        $('.newsletter-button').text('sign up');
+                        $('.newsletter-button').attr('disabled', false);
+
+                        if (data.status === 422) {
+                            let errors = data.responseJSON.errors;
+                            $.each(errors, function(index, value) {
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: value[0]
+                                })
+                            })
+                        }
                     }
                 })
             })
