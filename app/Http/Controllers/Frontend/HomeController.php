@@ -74,6 +74,8 @@ class HomeController extends Controller
 
         $socialCounts = SocialCount::where(['status'=>1,'language'=>getLanguage()])->get();
 
+        $mostCommonTags = $this->mostCommonTags();
+
         return view('frontend.home',compact(
         'breakingNews',
         'heroSlider',
@@ -84,7 +86,8 @@ class HomeController extends Controller
         'categorySectionThree',
         'categorySectionFour',
         'mostViewedPosts',
-        'socialCounts'));
+        'socialCounts',
+        'mostCommonTags'));
     }
 
     public function showNews(string $slug){
