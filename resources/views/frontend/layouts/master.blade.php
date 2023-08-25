@@ -4,17 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title')</title>
-    <meta name="description" content="@yield('meta_description')">
+    <title>@hasSection('title') @yield('title') @else {{ $settings['site_seo_title'] }} @endif </title>
+    <meta name="description" content="@hasSection('meta_description') @yield('meta_description') @else {{ $settings['site_seo_description'] }} @endif " />
+    <meta name="keywords" content="{{ $settings['site_seo_keywords'] }}" />
+
     <meta name="og:title" content="@yield('meta_og_title')" />
     <meta name="og:description" content="@yield('meta_og_description')" />
-    <meta name="og:image" content="@yield('meta_og_image')" />
-    <meta name="twitter:title" content="@yield('meta_tw_title') "/>
+    <meta name="og:image" content="@hasSection('meta_og_image') @yield('meta_og_image') @else {{ asset($settings['site_logo']) }} @endif" />
+    <meta name="twitter:title" content="@yield('meta_tw_title')" />
     <meta name="twitter:description" content="@yield('meta_tw_description')" />
     <meta name="twitter:image" content="@yield('meta_tw_image')" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="{{ asset($settings['site_favicon']) }}" type="image/png">
     <link href="{{ asset('frontend/asset/css/styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+
+    <style>
+        :root {
+            --colorPrimary: {{ $settings['site_color'] }};
+        }
+    </style>
 </head>
 
 <body>

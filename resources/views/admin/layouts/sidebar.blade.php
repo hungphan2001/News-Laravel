@@ -77,8 +77,7 @@
                 <span>{{ __('Subscribers') }}</span></a>
             </li>
 
-                <li
-                    class="dropdown
+                <li class="dropdown
                 {{ setSidebarActive([
                     'admin.social-link.*',
                     'admin.footer-info.*',
@@ -104,6 +103,10 @@
 
                     </ul>
                 </li>
+
+                <li class="{{ setSidebarActive(['admin.setting.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.setting.index') }}"><i class="fas fa-cog"></i>
+                    <span>{{ __('Settings') }}</span></a></li>
 
         </ul>
     </aside>
