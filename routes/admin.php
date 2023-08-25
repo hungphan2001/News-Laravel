@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SocialCountController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'admin' ,'as'=>'admin.'],function(){
@@ -42,4 +43,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function
 
     // Languages routes
     Route::resource('language',LanguageController::class);
+
+    //Social Count Routes
+    Route::resource('social-count', SocialCountController::class);
 });
