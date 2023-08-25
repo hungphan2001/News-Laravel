@@ -150,7 +150,10 @@ class HomeController extends Controller
         });
 
         $news = $news->activeEntries()->withLocalize()->paginate(4);
-        return view('frontend.news',compact('news'));
+
+        $recentNews = News::with(['category', 'author'])
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+        return view('frontend.news',compact('news','recentNews'));
     }
 
     public function countView($news)
