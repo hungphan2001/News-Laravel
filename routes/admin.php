@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\FooterInfoController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SocialCountController;
 use App\Http\Controllers\Admin\SocialLinkController;
@@ -103,4 +104,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function
     Route::put('appearance-setting', [SettingController::class, 'updateAppearanceSetting'])->name('appearance-setting.update');
     Route::put('microsoft-api-setting', [SettingController::class, 'updateMicrosoftApiSetting'])->name('microsoft-api-setting.update');
 
+    //Role and Permission Routes
+    Route::get('role', [RolePermissionController::class, 'index'])->name('role.index');
+    Route::get('role/create', [RolePermissionController::class, 'create'])->name('role.create');
+    Route::post('role/create', [RolePermissionController::class, 'store'])->name('role.store');
 });

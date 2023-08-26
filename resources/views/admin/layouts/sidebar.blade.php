@@ -17,9 +17,11 @@
             </li>
             <li class="menu-header">{{ __('Starter') }}</li>
 
+            @if (auth()->guard('admin')->user()->hasPermissionTo('category index','admin'))
             <li class="{{ setSidebarActive(['admin.category.*']) }}"><a class="nav-link"
                 href="{{ route('admin.category.index') }}"><i class="fas fa-list"></i>
                 <span>{{ __('Category') }}</span></a></li>
+            @endif
 
             <li class="dropdown {{ setSidebarActive(['admin.news.*', 'admin.pending.news']) }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-newspaper"></i>
@@ -100,6 +102,20 @@
                         <li class="{{ setSidebarActive(['admin.footer-grid-three.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.footer-grid-three.index') }}">{{ __('Footer Grid Three') }}</a>
                         </li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown
+                {{ setSidebarActive([
+                    'admin.role.*',
+                ]) }}
+            ">
+                    <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>
+                        <span>{{ __('Access Management') }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.role.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.role.index') }}">{{ __('Roles and Permissions') }}</a></li>
 
                     </ul>
                 </li>
