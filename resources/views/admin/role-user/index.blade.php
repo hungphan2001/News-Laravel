@@ -3,12 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Roles User') }}</h1>
+            <h1>{{ __('Roles Users') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Roles User') }}</h4>
+                <h4>{{ __('All Role Users') }}</h4>
                 <div class="card-header-action">
                     <a href="{{ route('admin.role-users.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> {{ __('Create new') }}
@@ -24,23 +24,38 @@
                                 <th class="text-center">
                                     #
                                 </th>
-                                <th>{{ __('Role Name') }}</th>
-                                <th>{{ __('Permissions') }}</th>
+                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Role') }}</th>
                                 <th>{{ __('Action') }}</th>
 
                             </tr>
                         </thead>
                         <tbody>
 
-                                </td>
+                            @foreach ($admins as $admin)
+                            <tr>
+                                <td>{{ $admin->id }}</td>
+
+                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td>
+                                <td><span class="badge bg-primary text-light">{{ $admin->getRoleNames()->first() }}</span></td>
+
                                 <td>
-                                    {{-- <a href="{{ route('admin.role-user.edit',$role->id) }}"
+                                    @if ($admin->getRoleNames()->first() != 'Super Admin')
+
+                                    <a href="{{ route('admin.role-users.edit', $admin->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>
 
-                                    <a href="{{ route('admin.role-user.destroy',$role->id) }}"
+                                    <a href="{{ route('admin.role-users.destroy', $admin->id) }}"
                                         class="btn btn-danger delete-item"><i
-                                            class="fas fa-trash-alt"></i></a> --}}
+                                            class="fas fa-trash-alt"></i></a>
+                                    @endif
                                 </td>
+                            </tr>
+                            @endforeach
+
+
 
                         </tbody>
                     </table>
@@ -51,6 +66,7 @@
         </div>
     </section>
 @endsection
+
 @push('scripts')
     <script>
         $("#table").dataTable({
