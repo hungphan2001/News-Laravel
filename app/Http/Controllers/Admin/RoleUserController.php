@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRoleUserStoreRequest;
+use App\Mail\RoleUserCreateMail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 class RoleUserController extends Controller
@@ -33,6 +35,7 @@ class RoleUserController extends Controller
      */
     public function store(AdminRoleUserStoreRequest $request)
     {
+        try{
             $user = new Admin();
             $user->image = '';
             $user->name = $request->name;
@@ -44,9 +47,16 @@ class RoleUserController extends Controller
             ///assign the role to user
             $user->assignRole($request->role);
 
+            //send mail to the user
+
+            Mail::to($request->email)->send(new RoleUserCreateMail($request->mail,$request->password));
+
             toast(__('Created Successfully!'), 'success');
 
             return redirect()->route('admin.role-users.index');
+        } catch(\Throwable $th){
+            throw $th;
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Language;
+use App\Models\Setting;
 
 function formatTags($tags):String{
     return implode(',',$tags);
@@ -59,4 +60,11 @@ function setSidebarActive(array $routes): ?string
         }
     }
     return '';
+}
+
+//Get settings
+
+function getSetting($key){
+    $data = Setting::where('key',$key)->first();
+    return $data->value;
 }
