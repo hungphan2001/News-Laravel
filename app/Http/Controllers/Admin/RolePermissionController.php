@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 class RolePermissionController extends Controller
@@ -58,5 +59,18 @@ class RolePermissionController extends Controller
         toast(__('Updated Successfully'), 'success');
 
         return redirect()->route('admin.role.index');
+    }
+
+    public function destroy(string $id):Response{
+
+        $role = Role::findOrFail($id);
+
+        if($role->name ==='Super Admin'){
+            return response(['status'=>'error','message'=>__('Can\'t Delete the Super Admin')]);
+        }
+        $role->delete();
+
+        return response(['status'=>'success','message'=>__('Deleted Successfully')]);
+
     }
 }
