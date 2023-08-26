@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\AdminAuthenticationController;
+use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactMessageController;
@@ -111,4 +112,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function
     Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('role.edit');
     Route::put('role/{id}/edit', [RolePermissionController::class, 'update'])->name('role.update');
     Route::delete('role/{id}/destroy', [RolePermissionController::class, 'destroy'])->name('role.destroy');
+
+
+    //Admin User Routes
+
+    Route::resource('role-users', RoleUserController::class);
 });
