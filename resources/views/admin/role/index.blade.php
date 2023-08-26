@@ -42,7 +42,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href=""
+                                    <a href="{{ route('admin.role.edit',$role->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>
 
                                     <a href=""
