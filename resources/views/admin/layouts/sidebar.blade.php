@@ -17,7 +17,7 @@
             </li>
             <li class="menu-header">{{ __('Starter') }}</li>
 
-            @if (auth()->guard('admin')->user()->hasPermissionTo('category index','admin'))
+            @if (hasPermission(['category index','category create','category update','category delete']))
             <li class="{{ setSidebarActive(['admin.category.*']) }}"><a class="nav-link"
                 href="{{ route('admin.category.index') }}"><i class="fas fa-list"></i>
                 <span>{{ __('Category') }}</span></a></li>
