@@ -16,6 +16,14 @@ class NewsController extends Controller
 {
     use FileUploadTrait;
 
+    public function __construct()
+    {
+        $this->middleware(['permission:news index,admin'])->only('index','toggleNewsStatus');
+        $this->middleware(['permission:news create,admin'])->only(['create','store']);
+        $this->middleware(['permission:news update'])->only(['edit','update']);
+        $this->middleware(['permission:news create'])->only(['edit','destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */

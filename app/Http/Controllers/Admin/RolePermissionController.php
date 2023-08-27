@@ -12,6 +12,14 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 class RolePermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:access management index,admin'])->only(['index']);
+        $this->middleware(['permission:access management create,admin'])->only(['create', 'store']);
+        $this->middleware(['permission:access management update,admin'])->only(['edit', 'update', 'handleTitle']);
+        $this->middleware(['permission:access management destroy,admin'])->only(['destroy']);
+    }
+
     public function index(){
         $roles = Role::all();
         return view('admin.role.index', compact('roles'));

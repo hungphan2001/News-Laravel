@@ -74,3 +74,17 @@ function getSetting($key){
 function hasPermission(array $permissions){
     return auth()->guard('admin')->user()->hasAnyPermission($permissions);
 }
+
+//Check is it super Admin
+
+function canAccess(array $permissions){
+
+    $permission = auth()->guard('admin')->user()->hasAnyPermission($permissions);
+    $superAdmin = auth()->guard('admin')->user()->hasRole('Super Admin');
+
+    if($permission || $superAdmin){
+     return true;
+    }else {
+     return false;
+    }
+}

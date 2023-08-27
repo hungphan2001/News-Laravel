@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class SocialLinkController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:footer index,admin'])->only(['index']);
+        $this->middleware(['permission:footer create,admin'])->only(['create', 'store']);
+        $this->middleware(['permission:footer update,admin'])->only(['edit', 'update']);
+        $this->middleware(['permission:footer destroy,admin'])->only(['destroy']);
+    }
 
     /**
      * Display a listing of the resource.
