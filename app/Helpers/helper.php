@@ -88,3 +88,17 @@ function canAccess(array $permissions){
      return false;
     }
 }
+
+//Get admin role
+
+function getRole(){
+    $role = auth()->guard('admin')->user()->getRoleNames();
+    return $role->first();
+}
+
+//Check user permission
+
+function checkPermission(string $permission){
+
+    return auth()->guard('admin')->user()->hasPermissionTo($permission);
+}

@@ -31,8 +31,8 @@
                     <li class="{{ setSidebarActive(['admin.news.*']) }}"><a class="nav-link"
                             href="{{ route('admin.news.index') }}">{{ __('All News') }}</a></li>
 
-                    <li class="{{ setSidebarActive(['admin.pending.news']) }}"><a class="nav-link"
-                        href="forms-validation.html">{{ __('Pending News') }}</a></li>
+                    <li class="{{ setSidebarActive(['admin.pending.news.*']) }}"><a class="nav-link"
+                        href="{{ route('admin.pending-news') }}">{{ __('Pending News') }}</a></li>
 
                 </ul>
             </li>
