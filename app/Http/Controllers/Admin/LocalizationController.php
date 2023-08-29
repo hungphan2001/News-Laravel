@@ -93,22 +93,34 @@ class LocalizationController extends Controller
 
     function translateString(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
+        $langCode = $request->language_code;
+        $languageStrings = trans($request->file_name, [], $request->lang_code);
 
-        $response = $client->request('POST', 'https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=vi&api-version=3.0&profanityAction=NoAction&textType=plain', [
-            'body' => '[
-            {
-                "Text": "I would really like to drive your car around the block a few times."
-            }
-        ]',
-            'headers' => [
-                'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
-                'X-RapidAPI-Key' => '8f9becca73msh0ee8ad5b8269c32p1b84b8jsn34d3719c2fe1',
-                'content-type' => 'application/json',
-            ],
+        $keyStrings = array_keys($languageStrings);
+
+        $text = implode(' || ', $keyStrings);
+
+        $response= Http::withHeaders([
+            'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
+            'X-RapidAPI-Key' => '8f9becca73msh0ee8ad5b8269c32p1b84b8jsn34d3719c2fe1',
+            'content-type' => 'application/json',
+        ])
+        ->post("https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=$langCode&api-version=3.0&profanityAction=NoAction&textType=plain",[
+            [
+                "Text"=> $text
+            ]
         ]);
 
-        echo $response->getBody();
+        $translatedText = json_decode($response->body())[0]->translations[0]->text;
 
+        $translatedValues = explode(' || ', $translatedText);
+
+        $updatedArray = array_combine($keyStrings, $translatedValues);
+
+        $phpArray = "<?php\n\nreturn " . var_export($updatedArray, true) . ";\n";
+
+        file_put_contents(lang_path($langCode.'/'.$request->file_name.'.php'), $phpArray);
+
+        return response(['status' => 'success', __('Translation is completed')]);
     }
 }

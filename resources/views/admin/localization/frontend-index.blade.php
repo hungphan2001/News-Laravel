@@ -191,8 +191,25 @@
                     method: 'POST',
                     url: "{{ route('admin.translate-string') }}",
                     data: formData,
+                    beforeSend: function(){
+                        $('.translate-button').text("Translating Please Wait...")
+                        $('.translate-button').prop('disabled', true);
+                    },
                     success: function(data) {
-                        console.log(data);
+                        if (data.status == 'success') {
+                            Swal.fire(
+                                'Done!',
+                                data.message,
+                                'success'
+                            )
+                            window.location.reload();
+                        }else {
+                            Swal.fire(
+                                'Error!',
+                                data.message,
+                                'error'
+                            )
+                        }
                     },
                     error: function(data) {
                         console.log(data);
