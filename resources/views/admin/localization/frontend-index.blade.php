@@ -81,6 +81,28 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $translatedValues = trans('frontend', [], $language->lang);
+                                                // dd($translatedValues);
+                                            @endphp
+
+                                            @foreach ($translatedValues as $key => $value)
+                                                <tr>
+                                                    <td>{{ ++$loop->index }}</td>
+                                                    <td>{{ $key }}</td>
+                                                    <td>{{ $value }}</td>
+                                                    <td>
+
+                                                        <button data-langcode="{{ $language->lang }}"
+                                                            data-key="{{ $key }}"
+                                                            data-value="{{ $value }}" data-filename="frontend"
+                                                            type="button" class="btn btn-primary modal_btn"
+                                                            data-toggle="modal" data-target="#exampleModal">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
                                         </tbody>
                                     </table>
