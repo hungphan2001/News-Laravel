@@ -2,7 +2,7 @@
 
 return array (
   'Home' => 'Home',
-  'About' => 'About',
+  'About' => 'Về',
   'Contact' => 'Contact',
   'contact us' => 'contact us',
   'Your email' => 'Your email',

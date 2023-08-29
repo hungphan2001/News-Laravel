@@ -75,4 +75,19 @@ class LocalizationController extends Controller
 
         return redirect()->back();
     }
+
+    function updateLangString(Request $request) : RedirectResponse {
+        $languageStrings = trans($request->file_name, [], $request->lang_code);
+
+        $languageStrings[$request->key] = $request->value;
+
+        $phpArray = "<?php\n\nreturn " . var_export($languageStrings, true) . ";\n";
+
+        file_put_contents(lang_path($request->lang_code.'/'.$request->file_name.'.php'), $phpArray);
+
+        toast(__('Updated Successfully!'), 'success');
+
+        return redirect()->back();
+
+    }
 }
