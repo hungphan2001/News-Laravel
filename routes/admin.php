@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\FooterGridThreeController;
 use App\Http\Controllers\Admin\FooterGridTwoController;
 use App\Http\Controllers\Admin\FooterInfoController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\LocalizationController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RolePermissionController;
@@ -117,6 +118,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function
 
 
     //Admin User Routes
-
     Route::resource('role-users', RoleUserController::class);
+
+    //Localization Routes
+    Route::get('admin-localization', [LocalizationController::class, 'adminIndex'])->name('admin-localization.index');
+    Route::get('frontend-localization', [LocalizationController::class, 'frontendIndex'])->name('frontend-localization.index');
 });
