@@ -92,7 +92,7 @@ class FooterGridThreeController extends Controller
     {
         FooterGridThree::findOrFail($id)->delete();
 
-        return response(['status' => 'success', 'message' => __('admin.admin.Deleted Successfully')]);
+        return response(['status' => 'success', 'message' => __('admin.Deleted Successfully')]);
     }
 
     public function handleTitle(Request $request)
