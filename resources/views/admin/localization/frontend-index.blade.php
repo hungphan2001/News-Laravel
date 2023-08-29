@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Admin Localization') }}</h1>
+            <h1>{{ __('Frontend Localization') }}</h1>
         </div>
 
         <div class="card card-primary">
