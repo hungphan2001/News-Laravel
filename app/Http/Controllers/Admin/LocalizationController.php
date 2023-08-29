@@ -90,4 +90,11 @@ class LocalizationController extends Controller
         return redirect()->back();
 
     }
+
+    function translateString(Request $request)
+    {
+
+        dd($request->all());
+
+    }
 }

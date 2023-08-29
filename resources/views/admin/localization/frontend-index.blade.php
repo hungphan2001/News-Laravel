@@ -48,10 +48,10 @@
                                             </form>
 
                                             <form class="translate-from" method="POST"
-                                                action="">
+                                                action="{{ route('admin.translate-string') }}">
                                                 <input type="hidden" name="language_code" value="{{ $language->lang }}">
-                                                <input type="hidden" name="file_name" value="admin">
-                                                <button type="submit"
+                                                <input type="hidden" name="file_name" value="frontend">
+                                                <button  type="submit"
                                                     class="btn btn-dark mx-3 translate-button">{{ __('Translate Strings') }}</button>
                                             </form>
 
@@ -182,6 +182,22 @@
                 $('input[name="key"]').val(key)
                 $('input[name="value"]').val(value)
                 $('input[name="file_name"]').val(filename)
+            })
+
+            $('.translate-from').on('submit', function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('admin.translate-string') }}",
+                    data: formData,
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                })
             })
         })
     </script>
