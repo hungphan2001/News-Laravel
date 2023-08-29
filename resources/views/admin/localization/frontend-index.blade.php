@@ -36,12 +36,12 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <form method="POST" action="">
+                                            <form method="POST" action="{{ route('admin.extract-localize-string') }}">
                                                 @csrf
                                                 <input type="hidden" name="directory"
-        >
+                                                    value="{{ resource_path('views/frontend') }},{{ app_path('Http/Controllers/Frontend') }},{{ resource_path('views/mail') }},{{ resource_path('views/auth') }}">
                                                 <input type="hidden" name="language_code" value="{{ $language->lang }}">
-                                                <input type="hidden" name="file_name" value="admin">
+                                                <input type="hidden" name="file_name" value="frontend">
 
                                                 <button type="submit"
                                                     class="btn btn-primary mx-3">{{ __('Generate Strings') }}</button>
