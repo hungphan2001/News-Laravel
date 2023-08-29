@@ -19,7 +19,7 @@ class SettingController extends Controller
         $this->middleware(['permission:setting index,admin'])->only(['index']);
         $this->middleware(['permission:setting update,admin'])->only(['updateGeneralSetting', 'updateSeoSetting', 'updateAppearanceSetting']);
     }
-    
+
     public function index(){
         return view('admin.setting.index');
     }
@@ -48,7 +48,7 @@ class SettingController extends Controller
             );
         }
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -73,7 +73,7 @@ class SettingController extends Controller
         );
 
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -88,7 +88,7 @@ class SettingController extends Controller
             ['value' => $request->site_color]
         );
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -110,7 +110,7 @@ class SettingController extends Controller
             ['value' => $request->site_microsoft_api_key]
         );
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }

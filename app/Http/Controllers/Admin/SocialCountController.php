@@ -17,7 +17,7 @@ class SocialCountController extends Controller
         $this->middleware(['permission:social count update,admin'])->only(['edit', 'update']);
         $this->middleware(['permission:social count delete,admin'])->only(['destroy']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -52,7 +52,7 @@ class SocialCountController extends Controller
         $socialCount->status = $request->status;
         $socialCount->save();
 
-        toast(__('Created Successfully!'), 'success');
+        toast(__('admin.Created Successfully!'), 'success');
 
         return redirect()->route('admin.social-count.index');
 
@@ -93,7 +93,7 @@ class SocialCountController extends Controller
         $socialCount->status = $request->status;
         $socialCount->save();
 
-        toast(__('Update Successfully!'), 'success');
+        toast(__('admin.Update Successfully!'), 'success');
 
         return redirect()->route('admin.social-count.index');
     }
@@ -106,6 +106,6 @@ class SocialCountController extends Controller
         $socialCount = SocialCount::findOrFail($id);
         $socialCount->delete();
 
-        return response(['status' => 'success', 'message' => __('Deleted Successfully!')]);
+        return response(['status' => 'success', 'message' => __('admin.Deleted Successfully!')]);
     }
 }

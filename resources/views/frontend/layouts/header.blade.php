@@ -34,8 +34,8 @@
                         </div>
 
                         <ul class="topbar-link">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">{{ __('frontend.Login') }}</a></li>
+                            <li><a href="register.html">{{ __('frontend.Register') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,23 +64,23 @@
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('home') }}">home</a>
+                            <a class="nav-link active" href="{{ route('home') }}">{{__('frontend.home')}}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="{{ route('about') }}"> about </a>
+                            <a class="nav-link" href="{{ route('about') }}"> {{__('frontend.about')}} </a>
                         </li>
                         <li class="nav-item dropdown has-megamenu">
-                            <a class="nav-link" href="blog.html">blog </a>
+                            <a class="nav-link" href="blog.html">{{__('frontend.blog')}} </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Pages </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> {{__('frontend.Pages')}} </a>
                             <ul class="dropdown-menu animate fade-up">
-                                <li><a class="dropdown-item icon-arrow" href="blog_details.html"> Blog single detail
+                                <li><a class="dropdown-item icon-arrow" href="blog_details.html"> {{ __('frontend.Blog single detail') }}
                                     </a></li>
-                                <li><a class="dropdown-item" href="404.html"> 404 Error </a>
+                                <li><a class="dropdown-item" href="404.html"> {{ __('frontend.404 Error') }} </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> contact </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> {{__('frontend.contact')}} </a></li>
                     </ul>
 
 
@@ -147,24 +147,24 @@
                     <nav class="list-group list-group-flush">
                         <ul class="navbar-nav ">
                             <li class="nav-item">
-                                <a class="nav-link active text-dark" href="index.html"> Home</a>
+                                <a class="nav-link active text-dark" href="index.html"> {{__('frontend.Home')}}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="about-us.html"> About </a>
+                                <a class="nav-link text-dark" href="about-us.html"> {{__('frontend.About')}} </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="blog.html">Blog </a>
+                                <a class="nav-link text-dark" href="blog.html">{{__('frontend.Blog')}} </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active dropdown-toggle  text-dark" href="#"
-                                    data-toggle="dropdown">Pages </a>
+                                    data-toggle="dropdown">{{__('frontend.Pages')}} </a>
                                 <ul class="dropdown-menu dropdown-menu-left">
-                                    <li><a class="dropdown-item" href="blog_details.html">Blog details</a></li>
-                                    <li><a class="dropdown-item" href="404.html"> 404 Error</a></li>
+                                    <li><a class="dropdown-item" href="blog_details.html">{{__('frontend.Blog details')}}</a></li>
+                                    <li><a class="dropdown-item" href="404.html"> {{__('frontend.404 Error')}}</a></li>
 
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link  text-dark" href="contact.html"> Contact </a>
+                            <li class="nav-item"><a class="nav-link  text-dark" href="contact.html"> {{__('frontend.Contact')}} </a>
                             </li>
                         </ul>
 

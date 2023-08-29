@@ -17,7 +17,7 @@ class AdController extends Controller
         $this->middleware(['permission:advertisement index,admin'])->only(['index']);
         $this->middleware(['permission:advertisement update,admin'])->only(['update']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +58,7 @@ class AdController extends Controller
             ]
         );
 
-        toast(__('Updated Successfully'), 'success');
+        toast(__('admin.Updated Successfully'), 'success');
 
         return redirect()->back();
     }

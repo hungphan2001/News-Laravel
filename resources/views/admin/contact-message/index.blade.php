@@ -3,12 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Contact Message') }}</h1>
+            <h1>{{ __('admin.Contact Message') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('All Messages') }}</h4>
+                <h4>{{ __('admin.All Messages') }}</h4>
 
             </div>
 
@@ -20,14 +20,14 @@
                                 <th class="text-center">
                                     #
                                 </th>
-                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('admin.Email') }}</th>
 
-                                <th>{{ __('Subject') }}</th>
-                                <th>{{ __('Message') }}</th>
-                                <th>{{ __('Replied') }}</th>
+                                <th>{{ __('admin.Subject') }}</th>
+                                <th>{{ __('admin.Message') }}</th>
+                                <th>{{ __('admin.Replied') }}</th>
 
 
-                                <th>{{ __('Action') }}</th>
+                                <th>{{ __('admin.Action') }}</th>
 
                             </tr>
                         </thead>
@@ -41,9 +41,9 @@
                                     <td>{{ $message->message }}</td>
                                     <td>
                                         @if ($message->replied == 1)
-                                        <i style="font-size:20px" class="fas fa-check text-success"></i>
+                                            <i style="font-size:20px" class="fas fa-check text-success"></i>
                                         @else
-                                        <i style="font-size:20px" class="fas fa-clock text-warning"></i>
+                                            <i style="font-size:20px" class="fas fa-clock text-warning"></i>
                                         @endif
 
                                     </td>
@@ -76,7 +76,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Replay To') }}: {{ $message->email }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('admin.Replay To') }}: {{ $message->email }}
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -85,18 +86,18 @@
                         <form action="{{ route('admin.contact.send-replay') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="">{{ __('Subject') }}</label>
+                                <label for="">{{ __('admin.Subject') }}</label>
                                 <input type="text" name="subject" id="" class="form-control">
                                 <input type="hidden" name="email" value="{{ $message->email }}" id=""
                                     class="form-control">
                                 <input type="hidden" name="message_id" value="{{ $message->id }}" id=""
-                                class="form-control">
+                                    class="form-control">
                                 @error('subject')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="">{{ __('Message') }}</label>
+                                <label for="">{{ __('admin.Message') }}</label>
                                 <textarea name="message" class="form-control" style="height: 200px !important;"></textarea>
                                 @error('message')
                                     <p class="text-danger">{{ $message }}</p>
@@ -104,8 +105,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">{{ __('Close') }}</button>
-                                <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
+                                    data-dismiss="modal">{{ __('admin.Close') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('admin.Send') }}</button>
                             </div>
                         </form>
                     </div>
@@ -123,7 +124,9 @@
                 "sortable": false,
                 "targets": [1]
             }],
-            "order": [[0, "desc"]]
+            "order": [
+                [0, "desc"]
+            ]
         });
     </script>
 @endpush

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{ __('General Dashboard') }} &mdash; Stisla</title>
+    <title>{{ __('admin.General Dashboard') }} &mdash; Stisla</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -22,7 +22,8 @@
     <link rel="stylesheet"
         href="{{ asset('admin/assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('admin/assets/modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap-iconpicker.min.css') }}">
 
     <!-- Template CSS -->
@@ -46,8 +47,8 @@
 <body>
 
     @php
-    $unReadMessages = \App\Models\ReceivedMail::where('seen', 0)->count();
-@endphp
+        $unReadMessages = \App\Models\ReceivedMail::where('seen', 0)->count();
+    @endphp
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
 
@@ -131,16 +132,16 @@
         });
 
         const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
         //Handle Dynamic delete
         $(document).ready(function() {
@@ -148,13 +149,13 @@
             $('.delete-item').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
-                    title: '{{ __('Are you sure') }}?',
-                    text: "{{ __('You will not be able to revert this') }}!",
-                    icon: '{{ __('warning') }}',
+                    title: '{{ __('admin.Are you sure') }}?',
+                    text: "{{ __('admin.You will not be able to revert this') }}!",
+                    icon: '{{ __('admin.warning') }}',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: '{{ __('Yes, delete it') }}!'
+                    confirmButtonText: '{{ __('admin.Yes, delete it') }}!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         let url = $(this).attr('href');

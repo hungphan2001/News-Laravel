@@ -224,7 +224,7 @@ class HomeController extends Controller
         $comment->comment = $request->comment;
         $comment->save();
 
-        toast(__('Comment added successfully!'), 'success');
+        toast(__('frontend.Comment added successfully!'), 'success');
         return redirect()->back();
     }
 
@@ -242,7 +242,7 @@ class HomeController extends Controller
         $comment->comment = $request->reply;
         $comment->save();
 
-        toast(__('Comment added successfully!'), 'success');
+        toast(__('frontend.Comment added successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -251,10 +251,10 @@ class HomeController extends Controller
         $comment = Comment::findOrFail($request->id);
         if(Auth::user()->id===$comment->user_id){
             $comment->delete();
-            return response(['status'=>'success','message'=>__('Deleted Successfully')]);
+            return response(['status'=>'success','message'=>__('frontend.Deleted Successfully')]);
         }
 
-        return response(['status'=>'error','message'=>__('Something went wrong')]);
+        return response(['status'=>'error','message'=>__('frontend.Something went wrong')]);
     }
 
     public function SubscribeNewsLetter(Request $request)
@@ -262,14 +262,14 @@ class HomeController extends Controller
        $request->validate([
         'email' => ['required', 'email', 'max:255', 'unique:subscribers,email']
        ],[
-        'email.unique' => __('Email is already subscribed!')
+        'email.unique' => __('frontend.Email is already subscribed!')
        ]);
 
        $subscriber = new Subscriber();
        $subscriber->email = $request->email;
        $subscriber->save();
 
-       return response(['status' => 'success', 'message' => __('Subscribed successfully!')]);
+       return response(['status' => 'success', 'message' => __('frontend.Subscribed successfully!')]);
 
     }
 
@@ -312,7 +312,7 @@ class HomeController extends Controller
             toast(__($e->getMessage()));
         }
 
-        toast(__('Message sent successfully!'), 'success');
+        toast(__('frontend.Message sent successfully!'), 'success');
 
         return redirect()->back();
     }

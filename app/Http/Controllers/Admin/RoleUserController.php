@@ -21,7 +21,7 @@ class RoleUserController extends Controller
         $this->middleware(['permission:access management update,admin'])->only(['edit', 'update', 'handleTitle']);
         $this->middleware(['permission:access management destroy,admin'])->only(['destroy']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -61,7 +61,7 @@ class RoleUserController extends Controller
 
             Mail::to($request->email)->send(new RoleUserCreateMail($request->mail,$request->password));
 
-            toast(__('Created Successfully!'), 'success');
+            toast(__('admin.Created Successfully!'), 'success');
 
             return redirect()->route('admin.role-users.index');
         } catch(\Throwable $th){
@@ -104,7 +104,7 @@ class RoleUserController extends Controller
         /** assign the role to user */
         $user->syncRoles($request->role);
 
-        toast(__('Update Successfully!'), 'success');
+        toast(__('admin.Update Successfully!'), 'success');
 
         return redirect()->route('admin.role-users.index');
     }
@@ -116,11 +116,11 @@ class RoleUserController extends Controller
     {
         $user = Admin::findOrFail($id);
         if($user->getRoleNames()->first() === 'Super Admin'){
-            return response(['status' => 'error', 'message' => __('Can\'t Delete the Super User')]);
+            return response(['status' => 'error', 'message' => __('admin.Can\'t Delete the Super User')]);
         }
         $user->delete();
 
-        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+        return response(['status' => 'success', 'message' => __('admin.Deleted Successfully')]);
 
     }
 }

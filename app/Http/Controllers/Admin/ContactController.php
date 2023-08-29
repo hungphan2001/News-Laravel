@@ -15,7 +15,7 @@ class ContactController extends Controller
         $this->middleware(['permission:contact index,admin'])->only(['index']);
         $this->middleware(['permission:contact update,admin'])->only(['update']);
     }
-    
+
     public function index()
     {
         $languages = Language::all();
@@ -33,7 +33,7 @@ class ContactController extends Controller
             ]
         );
 
-        toast(__('Updated Successfully'), 'success');
+        toast(__('admin.Updated Successfully'), 'success');
 
         return redirect()->back();
     }

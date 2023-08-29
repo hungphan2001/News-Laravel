@@ -3,27 +3,32 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Pending News') }}</h1>
+            <h1>{{ __('admin.Pending News') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('All Pending') }}</h4>
+                <h4>{{ __('admin.All Pending') }}</h4>
 
             </div>
 
             @php
-                if(canAccess(['news all-access'])){
+                if (canAccess(['news all-access'])) {
                     $news = \App\Models\News::with('category')
-                    ->where('is_approved', 0)
-                    ->orderBy('id', 'DESC')
-                    ->get();
-                }else {
+                        ->where('is_approved', 0)
+                        ->orderBy('id', 'DESC')
+                        ->get();
+                } else {
                     $news = \App\Models\News::with('category')
-                    ->where('is_approved', 0)
-                    ->where('author_id', auth()->guard('admin')->user()->id)
-                    ->orderBy('id', 'DESC')
-                    ->get();
+                        ->where('is_approved', 0)
+                        ->where(
+                            'author_id',
+                            auth()
+                                ->guard('admin')
+                                ->user()->id,
+                        )
+                        ->orderBy('id', 'DESC')
+                        ->get();
                 }
             @endphp
             <div class="card-body">
@@ -34,19 +39,19 @@
                                 <th class="text-center">
                                     #
                                 </th>
-                                <th>{{ __('Image') }}</th>
-                                <th>{{ __('Title') }}</th>
-                                <th>{{ __('Category') }}</th>
-                                <th>{{ __('Approve') }}</th>
+                                <th>{{ __('admin.Image') }}</th>
+                                <th>{{ __('admin.Title') }}</th>
+                                <th>{{ __('admin.Category') }}</th>
+                                <th>{{ __('admin.Approve') }}</th>
 
-                                <th>{{ __('Action') }}</th>
+                                <th>{{ __('admin.Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($news as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td >
+                                    <td>
                                         <img src="{{ asset($item->image) }}" width="100" alt="">
                                     </td>
 
@@ -57,21 +62,20 @@
                                             <input type="hidden" name="id" value="{{ $item->id }}">
                                             <div class="form-group">
                                                 <select name="is_approve" class="form-control" id="approve-input">
-                                                    <option value="0">{{ __('Pending') }}</option>
-                                                    <option value="1">{{ __('Approved') }}</option>
+                                                    <option value="0">{{ __('admin.Pending') }}</option>
+                                                    <option value="1">{{ __('admin.Approved') }}</option>
                                                 </select>
                                             </div>
                                         </form>
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('admin.news.edit', $item->id) }}"
-                                            class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-primary"><i
+                                                class="fas fa-edit"></i></a>
                                         <a href="{{ route('admin.news.destroy', $item->id) }}"
-                                            class="btn btn-danger delete-item"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                        <a href="{{ route('admin.news-copy', $item->id) }}"
-                                            class="btn btn-primary"><i class="fas fa-copy"></i></i></a>
+                                            class="btn btn-danger delete-item"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ route('admin.news-copy', $item->id) }}" class="btn btn-primary"><i
+                                                class="fas fa-copy"></i></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -89,27 +93,24 @@
 
 @push('scripts')
     <script>
-
         $("#table").dataTable({
-            "columnDefs": [
-                {
-                    "sortable": false,
-                    "targets": [2, 3]
-                }
-            ],
+            "columnDefs": [{
+                "sortable": false,
+                "targets": [2, 3]
+            }],
             "order": [
                 [0, 'desc']
             ]
         });
 
 
-        $(document).ready(function(){
+        $(document).ready(function() {
 
-            $('#approve-input').on('change', function(){
+            $('#approve-input').on('change', function() {
                 $('#approve_form').submit();
             });
 
-            $('#approve_form').on('submit', function(e){
+            $('#approve_form').on('submit', function(e) {
                 e.preventDefault();
 
                 let data = $(this).serialize();
@@ -117,8 +118,8 @@
                     method: 'PUT',
                     url: "{{ route('admin.approve-news') }}",
                     data: data,
-                    success: function(data){
-                        if(data.status === 'success'){
+                    success: function(data) {
+                        if (data.status === 'success') {
                             Toast.fire({
                                 icon: 'success',
                                 title: data.message
@@ -127,7 +128,7 @@
                             window.location.reload();
                         }
                     },
-                    error: function(error){
+                    error: function(error) {
                         console.log(error);
                     }
                 })

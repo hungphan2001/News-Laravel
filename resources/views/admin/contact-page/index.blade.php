@@ -3,12 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Contact Page') }}</h1>
+            <h1>{{ __('admin.Contact Page') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Contact Page') }}</h4>
+                <h4>{{ __('admin.Contact Page') }}</h4>
 
             </div>
 
@@ -36,26 +36,30 @@
                                     @method('PUT')
 
                                     <div class="form-group">
-                                        <label for="">{{ __('Address') }}</label>
-                                       <input type="text" class="form-control" name="address" value="{{ @$contact->address }}">
-                                       <input type="hidden" class="form-control" name="language" value="{{ $language->lang }}">
+                                        <label for="">{{ __('admin.Address') }}</label>
+                                        <input type="text" class="form-control" name="address"
+                                            value="{{ @$contact->address }}">
+                                        <input type="hidden" class="form-control" name="language"
+                                            value="{{ $language->lang }}">
 
 
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">{{ __('Phone') }}</label>
-                                       <input type="text" class="form-control" name="phone" value="{{ @$contact->phone }}">
+                                        <label for="">{{ __('admin.Phone') }}</label>
+                                        <input type="text" class="form-control" name="phone"
+                                            value="{{ @$contact->phone }}">
 
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">{{ __('Email') }}</label>
-                                       <input type="text" class="form-control" name="email" value="{{ @$contact->email }}">
+                                        <label for="">{{ __('admin.Email') }}</label>
+                                        <input type="text" class="form-control" name="email"
+                                            value="{{ @$contact->email }}">
 
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.Save') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -82,10 +86,10 @@
 
         if (jQuery().summernote) {
             @foreach ($languages as $language)
-            $(".summernote-{{ $language->lang }}").summernote({
-                dialogsInBody: true,
-                minHeight: 250,
-            });
+                $(".summernote-{{ $language->lang }}").summernote({
+                    dialogsInBody: true,
+                    minHeight: 250,
+                });
             @endforeach
 
         }

@@ -14,7 +14,7 @@ class AboutController extends Controller
         $this->middleware(['permission:about index,admin'])->only(['index']);
         $this->middleware(['permission:about update,admin'])->only(['update']);
     }
-    
+
     public function index()
     {
         $languages = Language::all();

@@ -15,7 +15,7 @@ class SubscriberController extends Controller
         $this->middleware(['permission:subscribers index,admin'])->only(['index', 'store']);
         $this->middleware(['permission:subscribers delete,admin'])->only(['destroy']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -40,7 +40,7 @@ class SubscriberController extends Controller
         //Send mail
         Mail::to($sub)->send(new Newsletter($request->subject,$request->message));
 
-        toast(__('Mail sended successfully!'), 'success');
+        toast(__('admin.Mail sended successfully!'), 'success');
 
         return redirect()->back();
 
@@ -53,6 +53,6 @@ class SubscriberController extends Controller
     {
         Subscriber::findOrFail($id)->delete();
 
-        return response(['status' => 'success', 'message' => __('Deleted Successfully!')]);
+        return response(['status' => 'success', 'message' => __('admin.Deleted Successfully!')]);
     }
 }
