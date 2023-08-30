@@ -38,18 +38,30 @@
                             </select>
                         </div>
 
-                        <ul class="topbar-link">
+                        <ul class="topbar-link ml-auto">
                             @if (!auth()->check())
                             <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
                             <li><a href="{{ route('register') }}">{{ __('frontend.Register') }}</a></li>
                             @else
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                            <li><a  onclick="event.preventDefault();
-                                this.closest('form').submit();" href="{{ route('register') }}">{{ __('frontend.Logout') }}</a></li>
-
-                            </form>
+                            <li class="dropdown"><a href="#" data-toggle="dropdown"
+                                    class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                    <div class="d-sm-none d-lg-inline-block">{{ __('admin.Hi') }}, {{ Auth::user()->name }}
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="#"
+                                            onclick="event.preventDefault();
+                                        this.closest('form').submit();"
+                                        href="{{ route('register') }}"
+                                            class="dropdown-item has-icon text-danger">
+                                            <i class="fas fa-sign-out-alt"></i> {{ __('frontend.Logout') }}
+                                        </a>
+                                    </form>
+                                </div>
+                            </li>
                             @endif
                         </ul>
                     </div>
