@@ -24,7 +24,7 @@
                         </ul>
                         <div class="topbar-text">
 
-                            {{ date('l, F j, Y') }}
+                            {{ date('l, M j, Y') }}
                         </div>
                     </div>
                 </div>
