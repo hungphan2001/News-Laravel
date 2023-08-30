@@ -1,6 +1,11 @@
 @php
-    $languages = \App\Models\Language::where('status',1)->get();
+    $languages = \App\Models\Language::where('status', 1)->get();
+    $FeaturedCategories = \App\Models\Category::where(['status' => 1, 'language' => getLanguage(), 'show_at_nav' => 1])->get();
+
+    $categories = \App\Models\Category::where(['status' => 1, 'language' => getLanguage(), 'show_at_nav' => 0])->get();
+
 @endphp
+
 <header class="bg-light">
     <!-- Navbar  Top-->
     <div class="topbar d-none d-sm-block">
@@ -28,14 +33,24 @@
                         <div class="topbar_language">
                             <select id="site-language">
                                 @foreach ($languages as $language)
-                                    <option value="{{ $language->lang }}"{{ getLanguage()=== $language->lang ? 'selected' : '' }}>{{ $language->name }}</option>
+                                    <option value="{{ $language->lang }}" {{ getLanguage() === $language->lang ? 'selected' : '' }}>{{ $language->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <ul class="topbar-link">
+                            @if (!auth()->check())
                             <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
                             <li><a href="{{ route('register') }}">{{ __('frontend.Register') }}</a></li>
+                            @else
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                            <li><a  onclick="event.preventDefault();
+                                this.closest('form').submit();" href="{{ route('register') }}">{{ __('frontend.Logout') }}</a></li>
+
+                            </form>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -63,24 +78,28 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('home') }}">{{__('frontend.home')}}</a>
-                        </li>
+                        @foreach ($FeaturedCategories as $category)
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{{ route('news', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                            </li>
+
+                        @endforeach
+
+                        @if (count($categories) > 0)
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="{{ route('about') }}"> {{__('frontend.about')}} </a>
-                        </li>
-                        <li class="nav-item dropdown has-megamenu">
-                            <a class="nav-link" href="blog.html">{{__('frontend.blog')}} </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> {{__('frontend.Pages')}} </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> {{ __('frontend.More') }} </a>
                             <ul class="dropdown-menu animate fade-up">
-                                <li><a class="dropdown-item icon-arrow" href="blog_details.html"> {{ __('frontend.Blog single detail') }}
+                                @foreach ($categories as $category)
+                                <li><a class="dropdown-item icon-arrow" href="{{ route('news', ['category' => $category->slug]) }}"> {{ $category->name }}
                                     </a></li>
-                                <li><a class="dropdown-item" href="404.html"> {{ __('frontend.404 Error') }} </a>
+                                @endforeach
+
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> {{__('frontend.contact')}} </a></li>
+                        @endif
+                        <li class="nav-item"><a class="nav-link" href="{{ route('about') }}"> {{ __('frontend.About') }} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> {{ __('frontend.contact') }} </a></li>
+
                     </ul>
 
 
@@ -102,7 +121,7 @@
                                         <div class="col">
                                             <input class="form-control border-secondary border-right-0 rounded-0"
                                                 type="search" value="" placeholder="Search "
-                                                id="example-search-input4">
+                                                id="example-search-input4" name="search">
                                         </div>
                                         <div class="col-auto">
                                             <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i class="fa fa-search"></i></button>
@@ -127,17 +146,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="widget__form-search-bar  ">
-                        <div class="row no-gutters">
-                            <div class="col">
-                                <input class="form-control border-secondary border-right-0 rounded-0" value=""
-                                    placeholder="Search">
+                        <form action="{{ route('news') }}" method="GET">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <input class="form-control border-secondary border-right-0 rounded-0" value=""
+                                        placeholder="Search" type="search" name="search">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <button class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -146,36 +167,34 @@
                 <div class="modal-body">
                     <nav class="list-group list-group-flush">
                         <ul class="navbar-nav ">
+                            @foreach ($FeaturedCategories as $category)
                             <li class="nav-item">
-                                <a class="nav-link active text-dark" href="index.html"> {{__('frontend.Home')}}</a>
+                                <a class="nav-link active text-dark" href="{{ route('news', ['category' => $category->slug]) }}"> {{ $category->name }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="about-us.html"> {{__('frontend.About')}} </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="blog.html">{{__('frontend.Blog')}} </a>
-                            </li>
+                            @endforeach
+
+                            @if (count($categories) > 0)
                             <li class="nav-item">
                                 <a class="nav-link active dropdown-toggle  text-dark" href="#"
-                                    data-toggle="dropdown">{{__('frontend.Pages')}} </a>
+                                    data-toggle="dropdown">More </a>
                                 <ul class="dropdown-menu dropdown-menu-left">
-                                    <li><a class="dropdown-item" href="blog_details.html">{{__('frontend.Blog details')}}</a></li>
-                                    <li><a class="dropdown-item" href="404.html"> {{__('frontend.404 Error')}}</a></li>
+                                    @foreach ($categories as $category)
+                                    <li><a class="dropdown-item" href="{{ route('news', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                                    @endforeach
 
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link  text-dark" href="contact.html"> {{__('frontend.Contact')}} </a>
+                            @endif
+
+                            <li class="nav-item"><a class="nav-link  text-dark" href="{{ route('about') }}"> {{ __('frontend.About') }} </a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link  text-dark" href="{{ route('contact') }}"> {{ __('frontend.contact') }} </a>
                             </li>
                         </ul>
 
                     </nav>
                 </div>
-                <div class="modal-footer">
-                    <p>© 2023 <a href="">Hung Phan</a>
-                        -
-                        Premium template news, blog & magazine &amp;
-                        magazine theme by <a href="">Hung Phan</a></p>
-                </div>
+
             </div>
         </div>
     </div>
