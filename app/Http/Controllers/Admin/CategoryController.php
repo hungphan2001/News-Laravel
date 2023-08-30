@@ -7,6 +7,7 @@ use App\Http\Requests\AdminCategoryRequest;
 use App\Http\Requests\AdminCategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\Language;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -95,12 +96,16 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
-            $category = Category::find($id);
+
+       try {
+            $category = Category::findOrFail($id);
+            $news = News::where('category_id', $category->id)->get();
+            foreach($news as $item){
+                $item->tags()->delete();
+            }
             $category->delete();
-            return response(['status'=>'success','message'=>__('admin.Deleted Successfully!')]);
-        } catch(\Throwable $th){
-            return response(['status'=>'error','message'=>__('admin.Something went wrong!')]);
-        }
-    }
+            return response(['status' => 'success', 'message' => __('admin.Deleted Successfully!')]);
+       } catch (\Throwable $th) {
+            return response(['status' => 'error', 'message' => __('admin.Someting went wrong!')]);
+       }
 }
