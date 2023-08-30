@@ -34,7 +34,8 @@ class NewsController extends Controller
     public function index()
     {
         $languages = Language::all();
-        return view ('admin.news.index',compact('languages'));
+        $news = News::all();
+        return view ('admin.news.index',compact('languages','news'));
     }
 
     public function pendingNews() :View

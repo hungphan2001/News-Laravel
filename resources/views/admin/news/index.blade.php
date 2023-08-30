@@ -29,7 +29,7 @@
                 </ul>
                 <div class="tab-content tab-bordered" id="myTab3Content">
                     @foreach ($languages as $language)
-                        @phpif (canAccess(['news all-access'])) {
+                        @php if (canAccess(['news all-access'])) {
                                 $news = \App\Models\News::with('category')
                                     ->where('language', $language->lang)
                                     ->where('is_approved', 1)

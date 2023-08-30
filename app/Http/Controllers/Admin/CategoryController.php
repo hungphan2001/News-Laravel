@@ -16,8 +16,8 @@ class CategoryController extends Controller
     {
         $this->middleware(['permission:category index,admin'])->only('index');
         $this->middleware(['permission:category create,admin'])->only(['create','store']);
-        $this->middleware(['permission:category update'])->only(['edit','update']);
-        $this->middleware(['permission:category create'])->only(['edit','destroy']);
+        $this->middleware(['permission:category update,admin'])->only(['edit','update']);
+        $this->middleware(['permission:category create,admin'])->only(['edit','destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -45,7 +45,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->name;
-        $category->slug = \Str::slug($request->slug);
+        $category->slug = \Str::slug($request->name);
         $category->language = $request->language;
         $category->show_at_nav = $request->show_at_nav;
         $category->status = $request->status;
@@ -108,4 +108,6 @@ class CategoryController extends Controller
        } catch (\Throwable $th) {
             return response(['status' => 'error', 'message' => __('admin.Someting went wrong!')]);
        }
+}
+
 }
