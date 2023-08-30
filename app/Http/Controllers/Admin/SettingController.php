@@ -92,7 +92,6 @@ class SettingController extends Controller
 
         return redirect()->back();
     }
-
     function updateMicrosoftApiSetting(Request $request) : RedirectResponse {
 
         $request->validate([

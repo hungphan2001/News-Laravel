@@ -100,11 +100,18 @@ class LocalizationController extends Controller
 
         $text = implode(' || ', $keyStrings);
 
-        $response= Http::withHeaders([
-            'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
-            'X-RapidAPI-Key' => '8f9becca73msh0ee8ad5b8269c32p1b84b8jsn34d3719c2fe1',
+        // $response= Http::withHeaders([
+        //     'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
+        //     'X-RapidAPI-Key' => '8f9becca73msh0ee8ad5b8269c32p1b84b8jsn34d3719c2fe1',
+        //     'content-type' => 'application/json',
+        // ])
+
+        $response = Http::withHeaders([
+            'X-RapidAPI-Host' => getSetting('site_microsoft_api_host'),
+            'X-RapidAPI-Key' => getSetting('site_microsoft_api_key'),
             'content-type' => 'application/json',
         ])
+
         ->post("https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=$langCode&api-version=3.0&profanityAction=NoAction&textType=plain",[
             [
                 "Text"=> $text
