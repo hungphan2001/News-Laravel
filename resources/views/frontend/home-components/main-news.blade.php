@@ -13,7 +13,7 @@
                                     <!-- Post Article -->
                                     <div class="card__post ">
                                         <div class="card__post__body card__post__transition">
-                                            <a href="blog_details.html">
+                                            <a href="{{ route('news-details', $news->slug) }}">
                                                 <img src="{{ asset($news->image) }}" class="img-fluid" alt="">
                                             </a>
                                             <div class="card__post__content bg__post-cover">
@@ -22,7 +22,7 @@
                                                 </div>
                                                 <div class="card__post__title">
                                                     <h5>
-                                                        <a href="blog_details.html">
+                                                        <a href="{{ route('news-details', $news->slug) }}">
                                                             {!! truncate($news->title, 100) !!}</a>
                                                     </h5>
                                                 </div>
